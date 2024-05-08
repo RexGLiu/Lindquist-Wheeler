@@ -25,6 +25,7 @@ void process_cell_err(const Lattice::cell_err &err);
 Lattice& init_lattice(Lattice::particle_params & boundary, Lattice::particle_params & light, Lattice::cell_params & cell);
 void simulation(Lattice &universe, Lattice::particle_params &light, double *** data);
 
+# read in simulation parameters stdin -- this should be piped in from a param file (see the cfg file in the repo for an example)
 const int tot_cells = input_params(), N_ang = input_params();
 const double ang_max = pi*input_params(), ang_min = pi*input_params(), ang_inc = (ang_max - ang_min)/N_ang;
 
@@ -39,8 +40,8 @@ int main () {
 	ofstream outdata;
 	output_open(outdata, address+filename);
 
-	//Set up lattice universe
-	Lattice::particle_params boundary;
+	//Set up lattice universe: lattice object consists of Schwarzschild params, boundary test particle, and set of photons
+	Lattice::particle_params boundary;  # track boundary with test particle following radial time-like geodesic
 	Lattice::particle_params light;
 	Lattice::cell_params cell;
 	Lattice &universe = init_lattice(boundary, light, cell);
